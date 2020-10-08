@@ -4,7 +4,12 @@
   "description": "An API REST using Express.JS",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZUCHOVICKI/ExpressNODE.git"
   },
   "keywords": [
     "api",
@@ -14,7 +19,12 @@
   ],
   "author": "Emiliano Zuchovicki",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZUCHOVICKI/ExpressNODE/issues"
+  },
+  "homepage": "https://github.com/ZUCHOVICKI/ExpressNODE#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
   }
 }
