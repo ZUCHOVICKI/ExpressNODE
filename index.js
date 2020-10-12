@@ -1,17 +1,25 @@
+const bodyParser = require('body-parser')
 const express = require("express");
+
 const app = express();
 const {pokemon} = require('./pokedex.json')
 
-
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:true}));
 
 app.get("/",(req,res,next)=>{
     
-    res.status(200)
-    res.send("Bienvenido al Pokedex")
+    
+    res.status(200).send("Bienvenido al Pokedex")
 
 })
 
- app.get("/pokemon/all",(req,res,next)=>{
+app.post("/pokemon",(req,res,next)=>{
+
+    res.status(200).send(req.body.name)
+})
+
+ app.get("/pokemon",(req,res,next)=>{
     
     res.status(200)
     res.send(pokemon)
@@ -32,20 +40,25 @@ app.get("/",(req,res,next)=>{
 
  })
 
- app.get('/pokemon/:name',(req,res,next)=>{
+ app.get('/pokemon/:name([A-Za-z]+)',(req,res,next)=>{
 
     const name = req.params.name
+    const poke = pokemon.filter((p)=>{
+        if(p.name.toUpperCase() == name.toUpperCase()){
 
-    for(i=0;i<pokemon.length;i++){
-        if(pokemon[i].name==name){
-
-            res.status(200)
-            res.send(pokemon[i])
+            return p 
         }
-    }
-    res.status(404)
-    res.send('Pokemon no encontrado')
+        
+        
+    })
 
+    if(poke.length >0){
+        res.status(200).send(poke)
+    }
+
+    res.status(404).send('Pokemon No encontrado')
+    
+    
 
  })
 
