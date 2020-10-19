@@ -12,7 +12,7 @@ pokemon.post("/",(req,res,next)=>{
     const pkmn = await db.query("SELECT * FROM pokemon")
     console.log(pkmn)
     res.status(200)
-    res.json(pkmn)
+    res.json({code:1,message:pkmn})
 
  })
 
@@ -21,12 +21,12 @@ pokemon.post("/",(req,res,next)=>{
     if(id > 0 &&id  <= 723){
         const pkmn = await db.query("Select * from pokemon where pok_id = ?",[id])
         res.status(200)
-        res.send(pkmn)
+        res.json({code:1,message:pkmn})
 
     }
     else {
         res.status(404)
-        res.send('Pokemon no encontrado')
+        res.json({code:404,message:"Pokemon no Encontrado"})
     }
 
  })
@@ -54,7 +54,7 @@ pokemon.post("/",(req,res,next)=>{
     
     const pkmn = await db.query("Select * from pokemon where pok_name = ?",[name2])
 
-    res.status(200).send(pkmn)
+    res.status(200).json({code:1,message:pkmn})
  })
 
  module.exports = pokemon
