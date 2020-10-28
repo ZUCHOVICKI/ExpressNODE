@@ -1,7 +1,8 @@
 
 const morgan = require('morgan')
 const express = require("express");
-const pokemon = require('./Routes/pokemon')
+const pokemon = require('./Routes/pokemon');
+const user = require('./Routes/user');
 const app = express();
 
 
@@ -19,6 +20,8 @@ app.get("/",(req,res,next)=>{
 })
 
 app.use("/pokemon",pokemon)
+
+app.use("/user",user)
 
 app.use((req,res,next)=>{
 
