@@ -1,6 +1,7 @@
 const express = require('express');
 const user = express.Router();
 const db = require('../config/database')
+const jwt = require('jsonwebtoken');
 
 user.post("/", async(req,res,next) =>{
     const {user_name,user_mail,user_password} = req.body
@@ -24,6 +25,30 @@ else{
 })
 
 
+user.post("/login",async(req,res,next)=>{
+
+const {user_mail,user_password} = req.body
+const query = `Select * from user where user_mail = '${user_mail}' and user_password = '${user_password}';`
+const rows = await db.query(query)
+
+
+if(user_password&&user_mail){
+if(rows.length == 1){
+    const token = jwt.sign({
+        user_id : rows[0].user_id,
+        user_mail: rows[0].user_mail
+    }, 'debugkey')
+    return res.status(200).json({code:200,message:token})
+}
+else{
+
+    return res.status(401).json({code:401,message:'Usuario y/o contraseña incorrecta'})
+}
+
+}
+return res.status(500).json({code:500,message:'Campos Incompletos'})
+})
+
 user.get("/",async(req,res,next)=>{
 
     let query = `Select * from user`
@@ -33,4 +58,8 @@ user.get("/",async(req,res,next)=>{
     return res.status(200).json({code:200,message:rows})
 
 })
+
+
+
+
 module.exports = user;
