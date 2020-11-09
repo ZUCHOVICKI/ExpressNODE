@@ -1,32 +1,32 @@
 
 const morgan = require('morgan')
 const express = require("express");
+const app = express();
+//Routers
 const pokemon = require('./Routes/pokemon');
 const user = require('./Routes/user');
-const app = express();
 
 
+//Middleware separation 
+const auth = require("./middleware/auth")
+const notFound = require("./middleware/notFound")
+const index = require("./middleware/index")
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(morgan('dev'))
 
 
-app.get("/",(req,res,next)=>{
-    
-    
-    res.status(200).json({code:1,message:"Bienvenido al Pokedex"})
-
-})
-
-app.use("/pokemon",pokemon)
+app.use(index)
 
 app.use("/user",user)
 
-app.use((req,res,next)=>{
+app.use(auth)
+app.use("/pokemon",pokemon)
 
-    return res.status(404).json({code:404,message:"URL no encontrado"})
-})
+
+app.use(notFound)
+
 
 app.listen(process.env.PORT ||4000,()=>{
 
