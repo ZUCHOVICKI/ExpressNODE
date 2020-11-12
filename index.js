@@ -11,13 +11,15 @@ const user = require('./Routes/user');
 const auth = require("./middleware/auth")
 const notFound = require("./middleware/notFound")
 const index = require("./middleware/index")
+const cors = require("./middleware/cors")
 
+app.use(cors)
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(morgan('dev'))
 
 
-app.use(index)
+app.get("/",index)
 
 app.use("/user",user)
 
