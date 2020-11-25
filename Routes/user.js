@@ -49,16 +49,6 @@ else{
 return res.status(500).json({code:500,message:'Campos Incompletos'})
 })
 
-user.get("/",async(req,res,next)=>{
-
-    let query = `Select * from user`
-   const rows = await db.query(query);
-
-   
-    return res.status(200).json({code:200,message:rows})
-
-})
-
 
 
 
