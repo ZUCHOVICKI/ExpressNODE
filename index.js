@@ -19,9 +19,7 @@ app.use(express.urlencoded({extended:true}))
 app.use(morgan('dev'))
 
 
-app.get("/",(req,res,next)=>{
-    res.status(200).send("Bienvenido al Pokedex")
-})
+app.get("/",(index))
 
 app.use("/user",user)
 
